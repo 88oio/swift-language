@@ -129,7 +129,7 @@ someTuple = (left: 5, right: 5)  // 错误：命名类型不匹配
 
 你可以对形参类型为 `() -> T`（其中 T 是任何类型）的函数使用 `autoclosure` 特性，这会在调用侧隐式创建一个闭包。这从语法结构上提供了一种便捷：延迟对表达式的求值，直到其值在函数体中被调用。以自动闭包做为形参的函数类型的例子详见 [自动闭包](../02_language_guide/07_Closures.md#autoclosures)。
 
-函数类型可以拥有一个可变参数在*形参类型*中。从语法角度上讲，可变参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变参数的例子，请参阅 [可变参数](../02_language_guide/06_Functions.md#variadic-parameters)。
+函数类型可以拥有多个可变参数在*形参类型*中。从语法角度上讲，可变参数由一个基础类型名字紧随三个点（`...`）组成，如 `Int...`。可变参数被认为是一个包含了基础类型元素的数组。即 `Int...` 就是 `[Int]`。关于使用可变参数的例子，请参阅 [可变参数](../02_language_guide/06_Functions.md#variadic-parameters)。
 
 为了指定一个 `in-out` 参数，可以在形参类型前加 `inout` 前缀。但是你不可以对可变参数或返回值类型使用 `inout`。关于这种形参的详细讲解请参阅 [输入输出参数](../02_language_guide/06_Functions.md#in-out-parameters)。
 
@@ -443,6 +443,38 @@ let anotherInstance = metatype.init(string: "some string")
 
 #### metatype-type {#metatype-type}
 > *元类型* → [类型](#type) **.** **Type** | [类型](#type) **.** **Protocol**
+
+## 任意类型{#any-type-h}
+
+`Any` 类型可以包含其他类型的值。`Any` 可以用于以下类型实例的具体类型：
+
+* 类、结构体或枚举
+* 元类型，例如 `Int.self`
+* 任意类型组成的元组
+* 闭包或函数类型
+
+```Swift
+let mixed: [Any] = ["one", 2, true, (4, 5.3), { () -> Int in return 6 }]
+```
+
+当使用 `Any` 作为实例的具体类型时，访问其属性和方法之前需要转换其为已知类型。类型是 `Any` 的实例保留其原始的动态类型，并且可以通过任一类型转换操作符 `as`、`as?` 或 `as!` 进行类型转换。例如下文，使用 `as?` 将进行混合数组中第一个对象根据情况向下转换为 `String` 。
+
+```swift
+if let first = mixed.first as? String {
+    print("The first item, '\(first)', is a string.")
+}
+// 打印 "The first item, 'one', is a string."
+```
+
+关于转换的更多细节，请参阅 [类型转换](../02_language_guide/18_Type_Casting.md)。
+
+`AnyObject` 协议和 `Any` 类型类似。所有类隐式遵循 `AnyObject`。和 `Any` 不一样，`AnyObject`  定义在 Swift 标准库中而不是在语言里。更多细节，请参阅 [类专属的协议](../02_language_guide/121_Protocols.md#class-only-protoco) 和  [`AnyObject`](https://developer.apple.com/documentation/swift/anyobject)。
+
+> 任意类型语法
+
+#### any-type{#any-type}
+
+> *任意类型* → **Any**
 
 ## 自身类型 {#self-type-h}
 

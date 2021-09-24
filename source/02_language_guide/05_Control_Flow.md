@@ -97,6 +97,8 @@ for tickMark in stride(from: 3, through: hours, by: hourInterval) {
 }
 ```
 
+以上示例使用 `for-in` 循环来遍历范围、数组、字典和字符串。你可以用它来遍历任何的集合，包括实现了 [Sequence](https://developer.apple.com/documentation/swift/sequence) 协议的自定义类或集合类型。
+
 ## While 循环 {#while-loops}
 
 `while` 循环会一直运行一段语句直到条件变成 `false`。这类循环适合使用在第一次迭代前，迭代次数未知的情况下。Swift 提供两种 `while` 循环形式：
@@ -637,7 +639,7 @@ print(description)
 
 为了实现这个目的，你可以使用标签（*statement label*）来标记一个循环体或者条件语句，对于一个条件语句，你可以使用 `break` 加标签的方式，来结束这个被标记的语句。对于一个循环语句，你可以使用 `break` 或者 `continue` 加标签，来结束或者继续这条被标记语句的执行。
 
-声明一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，作为这个语句的前导关键字（introducor keyword），并且该标签后面跟随一个冒号。下面是一个针对 `while` 循环体的标签语法，同样的规则适用于所有的循环体和条件语句。
+声明一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，作为这个语句的前导关键字（introducer keyword），并且该标签后面跟随一个冒号。下面是一个针对 `while` 循环体的标签语法，同样的规则适用于所有的循环体和条件语句。
 
 ```swift
  label name: while condition {
